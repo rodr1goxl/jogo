@@ -1,0 +1,135 @@
+:root {
+    --navy: #1a3a5a;
+    --gold: #d4af37;
+    --parchment: #f4e4bc;
+    --dark-blue: #0d1b2a;
+    --border-color: #8b7355;
+}
+
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background-image: url(imagens/papel.png);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.game-container {
+    width: 95%;
+    max-width: 1200px;
+    background-image: url(imagens/papel.png);
+    border: 4px solid var(--gold);
+    padding: 15px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    margin: 20px 0;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--gold);
+    display: inline-block;
+    padding: 5px 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.welcome-banner {
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 5px 30px;
+    width: fit-content;
+    margin: 15px auto;
+}
+
+/* Layout Principal */
+.main-content {
+    display: grid;
+    grid-template-columns: 250px 1fr 280px;
+    gap: 15px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo branco levemente transparente */
+    background-image: url(imagens/carta.png);
+    background-size: cover;
+    border: 2px solid var(--border-color);
+    padding: 15px;
+    border-radius: 5px;
+    color: #2c3e50;
+}
+
+/* Sidebar */
+.sidebar h2 { font-size: 1.2rem; text-align: center; background: var(--navy); color: white; padding: 5px; margin-top: 0; }
+.resource-item { margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.icon { font-size: 2rem; }
+
+.progress-bar-bg { background: #ccc; height: 20px; border-radius: 10px; margin-top: 5px; }
+.progress-bar-fill.green { background: #4CAF50; width: 100%; height: 100%; border-radius: 10px; transition: width 0.3s ease; }
+.progress-tag { background: #ddd; padding: 5px; text-align: center; font-size: 0.8rem; border-radius: 10px; font-weight: bold;}
+
+/* Desafio Central */
+.parchment {
+    background: #fdf5e6;
+    padding: 30px;
+    border-radius: 2px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    min-height: 300px;
+    position: relative;
+    border: 1px solid #d2b48c;
+}
+
+.challenge-title { font-size: 1.4rem; color: #2c3e50; margin-top: 0; }
+.hint-box { background: rgba(212, 175, 55, 0.2); padding: 15px; border-left: 5px solid var(--gold); margin-top: 20px; }
+.word-slots { font-family: monospace; font-size: 1.5rem; letter-spacing: 5px; font-weight: bold; margin-top: 20px; color: var(--navy); }
+
+/* Ações */
+.action-panel h2 { color: var(--gold); background: var(--navy); padding: 10px; margin: -15px -15px 15px -15px; text-align: center; }
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold;}
+input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; font-size: 1rem;}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: 0.2s;
+}
+.btn:hover { opacity: 0.9; }
+.btn-primary { background: #1a3a5a; border: 1px solid var(--gold); }
+.btn-secondary { background: #4a5d23; }
+
+/* Footer */
+.footer { text-align: center; margin-top: 20px; font-size: 0.8rem; color: #fff; text-shadow: 1px 1px 2px black;}
+.footer a { color: var(--gold); text-decoration: none; margin: 0 10px; }
+
+/* Decorações */
+.ship-illustration { font-size: 100px; position: absolute; bottom: 10px; right: 20px; opacity: 0.5; }
+.compass-decoration { font-size: 80px; text-align: center; opacity: 0.2; margin-top: 20px; }
+
+/* Responsividade para Celulares e Tablets */
+@media (max-width: 900px) {
+    .main-content {
+        grid-template-columns: 1fr; /* Empilha tudo em uma coluna */
+    }
+    .ship-illustration { font-size: 60px; }
+}
