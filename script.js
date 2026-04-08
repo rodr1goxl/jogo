@@ -3,43 +3,43 @@ const fases = [
     {
         titulo: "<span class='material-symbols-outlined'>water</span> 1º Desafio: Navegar pelo Oceano",
         desc: "Para sair do porto, você precisa deste objeto:",
-        dica: "\"Fui herdado dos árabes. Ajudo o marinheiro a olhar para as estrelas.\"",
-        palavra: "ASTROLABIO",
-        historia: "Os ventos sopraram a nosso favor! Saímos do porto seguro e nossa embarcação agora navega em direção ao Cabo das Tormentas."
+        dica: "\"País pioneiro nas Grandes Navegações\"",
+        palavra: "PORTUGAL",
+        historia: "O Pioneirismo Português e o Bojador (1415–1434): Tudo começa com a conquista de Ceuta e a exploração da costa africana. O grande marco mental foi a passagem do Cabo Bojador por Gil Eanes, que desmistificou as lendas de monstros marinhos e abriu caminho para o Atlântico Sul."
     },
     {
         titulo: "<span class='material-symbols-outlined'>dangerous</span> 2º Desafio: Defesa do Navio",
         desc: "Piratas à vista! Precisamos carregar os canhões com...",
         dica: "\"Sou um pó escuro e perigoso que faz barulho no mar.\"",
         palavra: "POLVORA",
-        historia: "Conseguimos despistar os corsários! Chegamos às águas quentes da costa leste africana. A viagem continua."
+        historia: "​A Superação do Cabo da Boa Esperança (1488): Bartolomeu Dias consegue contornar o extremo sul da África. Este evento provou que o Oceano Atlântico e o Oceano Índico estavam conectados, tornando a rota para as especiarias uma possibilidade real por mar."
     },
     {
         titulo: "<span class='material-symbols-outlined'>air</span> 3º Desafio: A Calmaria",
         desc: "As velas estão murchas. Precisamos aguardar o...",
         dica: "\"Não posso ser visto, mas empurro o navio para a frente.\"",
         palavra: "VENTO",
-        historia: "Os ventos finalmente voltaram. Cruzamos o oceano Índico e estamos cada vez mais perto do nosso destino."
+        historia: "O Encontro com a América e Tordesilhas (1492–1494): Cristóvão Colombo, navegando pela Espanha, chega às Antilhas buscando o Oriente. Para evitar uma guerra entre as potências ibéricas, assina-se o Tratado de Tordesilhas, dividindo o mundo em duas esferas de influência."
     },
     {
         titulo: "<span class='material-symbols-outlined'>map</span> 4º Desafio: Encontrando Terra",
         desc: "Avistamos uma ilha! Onde marcamos nossa rota?",
-        dica: "\"Sou um desenho do mundo num pedaço de papel.\"",
-        palavra: "MAPA",
-        historia: "Terra à vista! Nossa embarcação ancorou com segurança no porto de Calicute, nas Índias. Chegou a hora dos negócios."
+        dica: "\"Navegador que chegou ao Brasil em 1500\"",
+        palavra: "CABRAL",
+        historia: "A Rota das Índias e o Brasil (1498–1500): Vasco da Gama finalmente chega a Calecute, na Índia, estabelecendo a rota comercial mais lucrativa da época. Dois anos depois, a frota de Pedro Álvares Cabral oficializa a posse das terras do Brasil no caminho para o Oriente."
     },
     {
         titulo: "<span class='material-symbols-outlined'>diamond</span> 5º Desafio: O Mercado Final",
         desc: "Chegamos ao destino! Qual especiaria viemos buscar?",
-        dica: "\"Sou pequena, preta e ardo na boca. Valho meu peso em ouro!\"",
-        palavra: "PIMENTA",
-        historia: "Tudo vendido e carregado! Nossos porões estão cheios de riquezas. É hora de voltar para casa e celebrar com o Rei!"
+        dica: "\"​Quem comandou a primeira viagem ao redor do mundo\"",
+        palavra: "MAGALHÃES",
+        historia: "A Primeira Volta ao Mundo (1519–1522): A expedição iniciada por Fernão de Magalhães completa a primeira circunavegação do globo. Isso confirmou a imensidão do Oceano Pacífico e provou, de forma definitiva, que todas as águas do mundo estavam interligadas."
     }
 ];
 
 // Variáveis de Estado
 let faseAtual = 0;
-let ouro = 50;
+let ouro = 40;
 let saudeNavio = 100; // Saúde inicial
 let letrasReveladas = [];
 
