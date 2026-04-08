@@ -153,7 +153,7 @@ input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; f
     max-width: 400px;
     text-align: center;
     color: #2c3e50;
-    border: 3px solid var(--border-color);
+    border: 3px solid #42445A00;
     box-shadow: 0 0 30px rgba(0,0,0,0.9);
     animation: zoomIn 0.4s ease-out;
 }
