@@ -64,10 +64,9 @@ body {
 }
 
 .card {
-    background-color: rgba(255, 255, 255, 0.9); /* Fundo branco levemente transparente */
     background-image: url(imagens/carta.png);
     background-size: cover;
-    border: 2px solid var(--border-color);
+    border: 2px solid #6D6D6D00;
     padding: 15px;
     border-radius: 5px;
     color: #2c3e50;
@@ -76,10 +75,11 @@ body {
 /* Sidebar */
 .sidebar h2 { font-size: 1.2rem; text-align: center; background: var(--navy); color: white; padding: 5px; margin-top: 0; }
 .resource-item { margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-.icon { font-size: 2rem; }
+.icon { font-size: 2rem; color: var(--navy); }
 
 .progress-bar-bg { background: #ccc; height: 20px; border-radius: 10px; margin-top: 5px; }
-.progress-bar-fill.green { background: #4CAF50; width: 100%; height: 100%; border-radius: 10px; transition: width 0.3s ease; }
+.progress-bar-fill { height: 100%; border-radius: 10px; transition: width 0.3s ease, background-color 0.3s ease; }
+.green { background: #4CAF50; width: 100%; }
 .progress-tag { background: #ddd; padding: 5px; text-align: center; font-size: 0.8rem; border-radius: 10px; font-weight: bold;}
 
 /* Desafio Central */
@@ -93,7 +93,7 @@ body {
     border: 1px solid #d2b48c;
 }
 
-.challenge-title { font-size: 1.4rem; color: #2c3e50; margin-top: 0; }
+.challenge-title { font-size: 1.4rem; color: #2c3e50; margin-top: 0; display: flex; align-items: center; gap: 10px; }
 .hint-box { background: rgba(212, 175, 55, 0.2); padding: 15px; border-left: 5px solid var(--gold); margin-top: 20px; }
 .word-slots { font-family: monospace; font-size: 1.5rem; letter-spacing: 5px; font-weight: bold; margin-top: 20px; color: var(--navy); }
 
@@ -114,22 +114,60 @@ input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; f
     color: white;
     transition: 0.2s;
 }
-.btn:hover { opacity: 0.9; }
+.btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
 .btn-primary { background: #1a3a5a; border: 1px solid var(--gold); }
 .btn-secondary { background: #4a5d23; }
 
-/* Footer */
-.footer { text-align: center; margin-top: 20px; font-size: 0.8rem; color: #fff; text-shadow: 1px 1px 2px black;}
-.footer a { color: var(--gold); text-decoration: none; margin: 0 10px; }
-
 /* Decorações */
-.ship-illustration { font-size: 100px; position: absolute; bottom: 10px; right: 20px; opacity: 0.5; }
-.compass-decoration { font-size: 80px; text-align: center; opacity: 0.2; margin-top: 20px; }
+.ship-illustration { font-size: 100px; position: absolute; bottom: 10px; right: 20px; opacity: 0.4; color: var(--navy); }
+.compass-decoration { font-size: 80px; text-align: center; opacity: 0.2; margin-top: 20px; display: block;}
 
-/* Responsividade para Celulares e Tablets */
+/* Efeito Pulso Ouro */
+.gold-pulse {
+    animation: pulseGold 0.4s ease-out;
+    display: inline-block;
+}
+@keyframes pulseGold {
+    0% { transform: scale(1); color: inherit; }
+    50% { transform: scale(1.4); color: var(--gold); text-shadow: 0 0 5px var(--gold); }
+    100% { transform: scale(1); color: inherit; }
+}
+
+/* =========================================
+   NOVO: CARTA DE TRANSIÇÃO (MODAL)
+========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background-image: url(imagens/carta.png);
+    background-size: cover;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+    color: #2c3e50;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 0 30px rgba(0,0,0,0.9);
+    animation: zoomIn 0.4s ease-out;
+}
+
+.modal-card h2 { margin-top: 0; font-family: 'Georgia', serif; border-bottom: 2px dashed var(--border-color); padding-bottom: 10px; }
+.modal-card p { font-size: 1.1rem; line-height: 1.5; font-style: italic; font-weight: bold; }
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsividade */
 @media (max-width: 900px) {
-    .main-content {
-        grid-template-columns: 1fr; /* Empilha tudo em uma coluna */
-    }
+    .main-content { grid-template-columns: 1fr; }
     .ship-illustration { font-size: 60px; }
 }
