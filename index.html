@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rota das Especiarias</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 <body>
-    <div class="game-container">
+    <div class="game-container fade-in">
         <header class="header">
-            <div class="logo">🧭 ROTA DAS ESPECIARIAS</div>
+            <div class="logo">
+                <span class="material-symbols-outlined" style="vertical-align: bottom;">explore</span> 
+                ROTA DAS ESPECIARIAS
+            </div>
             <div class="welcome-banner">Bem-vindo a bordo, Capitão!</div>
         </header>
 
@@ -17,29 +21,29 @@
             <aside class="sidebar card">
                 <h2>Recursos</h2>
                 <div class="resource-item">
-                    <span class="icon">💰</span>
+                    <span class="icon material-symbols-outlined">monetization_on</span>
                     <div class="info">
                         <strong>Ouro:</strong>
                         <span id="gold-display">50 moedas</span>
                     </div>
                 </div>
                 <div class="resource-item">
-                    <span class="icon">⛵</span>
+                    <span class="icon material-symbols-outlined">sailing</span>
                     <div class="info">
-                        <strong>Saúde do Navio: 100%</strong>
+                        <strong id="health-text">Saúde do Navio: 100%</strong>
                         <div class="progress-bar-bg">
-                            <div class="progress-bar-fill green"></div>
+                            <div class="progress-bar-fill green" id="health-bar"></div>
                         </div>
                     </div>
                 </div>
                 <div class="resource-item">
-                    <span class="icon">📍</span>
+                    <span class="icon material-symbols-outlined">location_on</span>
                     <div class="info">
                         <strong>Progresso:</strong>
                         <div class="progress-tag" id="progress-text">0/5 etapas concluídas</div>
                     </div>
                 </div>
-                <div class="compass-decoration">🧭</div>
+                <div class="compass-decoration material-symbols-outlined">explore</div>
             </aside>
 
             <section class="challenge-panel">
@@ -54,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ship-illustration">🚢</div>
+                <div class="ship-illustration material-symbols-outlined">directions_boat</div>
             </section>
 
             <aside class="action-panel card">
@@ -71,7 +75,15 @@
                 <button class="btn btn-secondary" id="btn-hint">Comprar Letra <br><small>(Custa 5 Ouro)</small></button>
             </aside>
         </main>
+    </div>
 
+    <div id="transition-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <h2>📜 Diário de Bordo</h2>
+            <hr>
+            <p id="transition-text">...</p>
+            <button class="btn btn-primary" id="btn-continue" style="margin-top: 20px;">Zarpar!</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
