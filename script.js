@@ -1,4 +1,4 @@
-// Configuração das Fases (Mude a 'historia' para editar o texto da carta de chegada)
+// Configuração das Fases
 const fases = [
     {
         titulo: "<span class='material-symbols-outlined'>water</span> 1º Desafio: Navegar pelo Oceano",
@@ -12,7 +12,7 @@ const fases = [
         desc: "Piratas à vista! Precisamos carregar os canhões com...",
         dica: "\"Sou um pó escuro e perigoso que faz barulho no mar.\"",
         palavra: "POLVORA",
-        historia: "​A Superação do Cabo da Boa Esperança (1488): Bartolomeu Dias consegue contornar o extremo sul da África. Este evento provou que o Oceano Atlântico e o Oceano Índico estavam conectados, tornando a rota para as especiarias uma possibilidade real por mar."
+        historia: "A Superação do Cabo da Boa Esperança (1488): Bartolomeu Dias consegue contornar o extremo sul da África. Este evento provou que o Oceano Atlântico e o Oceano Índico estavam conectados, tornando a rota para as especiarias uma possibilidade real por mar."
     },
     {
         titulo: "<span class='material-symbols-outlined'>air</span> 3º Desafio: A Calmaria",
@@ -31,7 +31,7 @@ const fases = [
     {
         titulo: "<span class='material-symbols-outlined'>diamond</span> 5º Desafio: O Mercado Final",
         desc: "Chegamos ao destino! Qual especiaria viemos buscar?",
-        dica: "\"​Quem comandou a primeira viagem ao redor do mundo\"",
+        dica: "\"Quem comandou a primeira viagem ao redor do mundo\"",
         palavra: "MAGALHÃES",
         historia: "A Primeira Volta ao Mundo (1519–1522): A expedição iniciada por Fernão de Magalhães completa a primeira circunavegação do globo. Isso confirmou a imensidão do Oceano Pacífico e provou, de forma definitiva, que todas as águas do mundo estavam interligadas."
     }
@@ -40,8 +40,9 @@ const fases = [
 // Variáveis de Estado
 let faseAtual = 0;
 let ouro = 40;
-let saudeNavio = 100; // Saúde inicial
+let saudeNavio = 100;
 let letrasReveladas = [];
+let letrasFixas = []; // NOVO: Impede que o jogador apague as letras compradas com Dica
 
 // Elementos da Interface
 const elTitulo = document.getElementById('challenge-title');
@@ -50,7 +51,6 @@ const elDica = document.getElementById('hint-text');
 const elSlots = document.getElementById('word-slots');
 const elOuro = document.getElementById('gold-display');
 const elProgresso = document.getElementById('progress-text');
-const elInputPalpite = document.getElementById('player-guess');
 const elInputAposta = document.getElementById('bet-amount');
 
 // Elementos de Saúde
@@ -62,7 +62,13 @@ const modalOverlay = document.getElementById('transition-modal');
 const modalText = document.getElementById('transition-text');
 const btnContinue = document.getElementById('btn-continue');
 
-// Limpar texto
+// Elementos do Modal de Alerta
+const alertModalOverlay = document.getElementById('alert-modal');
+const alertTitle = document.getElementById('alert-title');
+const alertText = document.getElementById('alert-text');
+const btnAlertClose = document.getElementById('btn-alert-close');
+
+// Limpar texto (remove acentos e espaços)
 function formatarTexto(texto) {
     return texto.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 }
@@ -75,12 +81,12 @@ function carregarFase() {
 
     const fase = fases[faseAtual];
     letrasReveladas = Array(fase.palavra.length).fill("_");
+    letrasFixas = Array(fase.palavra.length).fill(false); // Reinicia as letras fixas
     
     elTitulo.innerHTML = fase.titulo;
     elDesc.innerHTML = `<strong>Desafio:</strong> ${fase.desc}`;
     elDica.innerHTML = `<strong>DICA:</strong> ${fase.dica}`;
     elProgresso.innerText = `${faseAtual}/${fases.length} etapas concluídas`;
-    elInputPalpite.value = "";
     
     atualizarSlots();
     atualizarOuro(false);
@@ -104,7 +110,6 @@ function atualizarSaude() {
     elHealthText.innerText = `Saúde do Navio: ${saudeNavio}%`;
     elHealthBar.style.width = `${saudeNavio}%`;
 
-    // Mudança de cores baseada no dano
     if (saudeNavio > 50) {
         elHealthBar.style.backgroundColor = '#4CAF50';
     } else if (saudeNavio > 20) {
@@ -114,45 +119,104 @@ function atualizarSaude() {
     }
 }
 
-// Botão de Dica
+function mostrarAlerta(mensagem, titulo = "⚠️ Aviso") {
+    alertTitle.innerText = titulo;
+    alertText.innerText = mensagem;
+    alertModalOverlay.style.display = 'flex';
+}
+
+// ==========================================
+// NOVO: SISTEMA DE DIGITAÇÃO PELO TECLADO
+// ==========================================
+document.addEventListener('keydown', (e) => {
+    // Trava a digitação se algum modal estiver aberto ou o jogo tiver acabado
+    if (modalOverlay.style.display === 'flex' || alertModalOverlay.style.display === 'flex') return;
+    if (faseAtual >= fases.length || saudeNavio <= 0 || ouro <= 0) return;
+
+    const isInputFocused = (document.activeElement && document.activeElement.tagName === 'INPUT');
+    const key = e.key.toUpperCase();
+
+    // Permitir enviar pelo ENTER
+    if (key === 'ENTER') {
+        document.getElementById('btn-submit').click();
+        return;
+    }
+
+    // Não processar letras ou backspace se o usuário estiver digitando a aposta de ouro
+    if (isInputFocused) return;
+
+    // Se for uma letra (A-Z ou Ç)
+    if (/^[A-ZÇ]$/.test(key)) {
+        // Encontra o primeiro espaço vazio "_"
+        const idx = letrasReveladas.indexOf("_");
+        if (idx !== -1) {
+            letrasReveladas[idx] = key;
+            atualizarSlots();
+        }
+    } 
+    // Se for apagar (Backspace)
+    else if (key === 'BACKSPACE') {
+        // Procura da direita para a esquerda a última letra que NÃO é fixa (comprada por dica)
+        for (let i = letrasReveladas.length - 1; i >= 0; i--) {
+            if (letrasReveladas[i] !== "_" && !letrasFixas[i]) {
+                letrasReveladas[i] = "_";
+                atualizarSlots();
+                break;
+            }
+        }
+    }
+});
+
+// Botão de Dica (Adaptado para o novo sistema)
 document.getElementById('btn-hint').addEventListener('click', () => {
     const custoDica = 5;
     if (ouro < custoDica) {
-        alert("Ouro insuficiente para comprar uma letra!");
+        mostrarAlerta("Ouro insuficiente para comprar uma letra!");
         return;
     }
 
     const palavraLimpa = formatarTexto(fases[faseAtual].palavra);
-    let indicesEscondidos = [];
+    let indicesDisponiveis = [];
     
-    for (let i = 0; i < letrasReveladas.length; i++) {
-        if (letrasReveladas[i] === "_") indicesEscondidos.push(i);
+    // Procura índices que ainda não foram travados pela dica
+    for (let i = 0; i < palavraLimpa.length; i++) {
+        if (!letrasFixas[i]) indicesDisponiveis.push(i);
     }
 
-    if (indicesEscondidos.length > 0) {
-        const indiceSorteado = indicesEscondidos[Math.floor(Math.random() * indicesEscondidos.length)];
+    if (indicesDisponiveis.length > 0) {
+        // Sorteia um índice para revelar
+        const indiceSorteado = indicesDisponiveis[Math.floor(Math.random() * indicesDisponiveis.length)];
+        
+        // Revela a letra correta e trava ela na posição
         letrasReveladas[indiceSorteado] = palavraLimpa[indiceSorteado];
+        letrasFixas[indiceSorteado] = true;
         
         ouro -= custoDica;
         atualizarOuro(true);
         atualizarSlots();
     } else {
-        alert("Todas as letras já foram reveladas!");
+        mostrarAlerta("Todas as letras já foram reveladas!");
     }
 });
 
-// Botão de Enviar
+// Botão de Enviar (Lê diretamente da variável letrasReveladas agora)
 document.getElementById('btn-submit').addEventListener('click', () => {
-    const palpite = formatarTexto(elInputPalpite.value);
+    const palpite = letrasReveladas.join("");
     const aposta = parseInt(elInputAposta.value);
     const respostaCerta = formatarTexto(fases[faseAtual].palavra);
 
     if (isNaN(aposta) || aposta < 1) {
-        alert("Defina uma aposta válida!");
+        mostrarAlerta("Defina uma aposta válida!");
         return;
     }
     if (aposta > ouro) {
-        alert("Você não tem ouro suficiente!");
+        mostrarAlerta("Você não tem ouro suficiente!");
+        return;
+    }
+    
+    // Alerta se a palavra não estiver totalmente preenchida
+    if (palpite.includes("_")) {
+        mostrarAlerta("Preencha todas as letras antes de zarpar!");
         return;
     }
 
@@ -160,15 +224,12 @@ document.getElementById('btn-submit').addEventListener('click', () => {
         // ACERTOU!
         ouro += aposta;
         atualizarOuro(true);
-        
-        // Exibe a carta da história da fase concluída ANTES de ir pra próxima
         mostrarCartaTransicao(fases[faseAtual].historia);
-
     } else {
-        // ERROU! (Perde ouro E vida do navio)
-        alert("Resposta errada! O navio bateu nos recifes e você perdeu moedas!");
+        // ERROU!
+        mostrarAlerta("Resposta errada! O navio bateu nos recifes e você perdeu moedas!", "💥 Impacto!");
         ouro -= aposta;
-        saudeNavio -= 25; // Tira 25% da saúde a cada erro
+        saudeNavio -= 25; 
         
         atualizarOuro(true);
         atualizarSaude();
@@ -177,17 +238,22 @@ document.getElementById('btn-submit').addEventListener('click', () => {
     }
 });
 
-// Função para mostrar a carta
+// Modal História
 function mostrarCartaTransicao(texto) {
     modalText.innerText = texto;
-    modalOverlay.style.display = 'flex'; // Exibe o modal
+    modalOverlay.style.display = 'flex';
 }
 
-// Botão "Zarpar" para fechar a carta e ir pra próxima fase
+// Botão Zarpar
 btnContinue.addEventListener('click', () => {
-    modalOverlay.style.display = 'none'; // Esconde o modal
-    faseAtual++; // Avança de fato a fase
-    carregarFase(); // Carrega o próximo desafio
+    modalOverlay.style.display = 'none'; 
+    faseAtual++; 
+    carregarFase(); 
+});
+
+// Fechar Alerta Customizado
+btnAlertClose.addEventListener('click', () => {
+    alertModalOverlay.style.display = 'none';
 });
 
 // Telas finais
