@@ -6,6 +6,11 @@
     --border-color: #8b7355;
 }
 
+/* Adicionado box-sizing para evitar que paddings quebrem as larguras */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Georgia', serif;
@@ -59,7 +64,10 @@ body {
 /* Layout Principal */
 .main-content {
     display: grid;
-    grid-template-columns: 250px 1fr 280px;
+    grid-template-areas:
+        "sidebar sidebar"
+        "challenge action";
+    grid-template-columns: 1fr 280px;
     gap: 15px;
 }
 
@@ -72,15 +80,43 @@ body {
     color: #2c3e50;
 }
 
-/* Sidebar */
-.sidebar h2 { font-size: 1.2rem; text-align: center; background: var(--navy); color: white; padding: 5px; margin-top: 0; }
-.resource-item { margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-.icon { font-size: 2rem; color: var(--navy); }
+/* =========================================
+   SIDEBAR (RECURSOS) E ÍCONES 
+========================================= */
+.sidebar { 
+    background-color: #001B36E0;
+    grid-area: sidebar; 
+    display: flex; 
+    justify-content: space-evenly; 
+    align-items: center; 
+    flex-wrap: wrap;
+    padding: 10px;
+    width: 100%;
+    border-radius: 15px;
+    border: 2px solid gold; 
+    color: white; /* FONTE BRANCA APLICADA AQUI */
+}
+.sidebar h2 { display: none; }
 
-.progress-bar-bg { background: #ccc; height: 20px; border-radius: 10px; margin-top: 5px; }
+.resource-item { display: flex; align-items: center; gap: 10px; margin-bottom: 0; width: 100%; max-width: 250px;} 
+.resource-item .info { flex-grow: 1; min-width: 120px; color: white; } /* FORÇA A FONTE BRANCA NOS TEXTOS */
+.icon { font-size: 2rem; }
+
+/* ======== EDITE AS CORES DOS ÍCONES AQUI ======== */
+#icon-gold { color: #FFD700; }     /* Cor do ícone de Ouro (Amarelo) */
+#icon-health { color: #00CED1; }   /* Cor do ícone de Saúde (Vermelho claro) */
+#icon-progress { color: #FF6347; } /* Cor do ícone de Progresso (Ciano/Azul claro) */
+/* ================================================ */
+
+.progress-bar-bg { background: #ccc; height: 20px; border-radius: 10px; margin-top: 5px; width: 100%;}
 .progress-bar-fill { height: 100%; border-radius: 10px; transition: width 0.3s ease, background-color 0.3s ease; }
 .green { background: #4CAF50; width: 100%; }
-.progress-tag { background: #ddd; padding: 5px; text-align: center; font-size: 0.8rem; border-radius: 10px; font-weight: bold;}
+.progress-tag { background: #ddd; color: #333; padding: 5px; text-align: center; font-size: 0.8rem; border-radius: 10px; font-weight: bold; margin-top: 5px;}
+
+.compass-decoration { display: none; }
+
+.challenge-panel { grid-area: challenge; }
+.action-panel { grid-area: action; }
 
 /* Desafio Central */
 .parchment {
@@ -94,14 +130,13 @@ body {
 }
 
 .challenge-title { font-size: 1.4rem; color: #2c3e50; margin-top: 0; display: flex; align-items: center; gap: 10px; }
-.hint-box { background: rgba(212, 175, 55, 0.2); padding: 15px; border-left: 5px solid var(--gold); margin-top: 20px; }
-.word-slots { font-family: monospace; font-size: 1.5rem; letter-spacing: 5px; font-weight: bold; margin-top: 20px; color: var(--navy); }
+.word-slots { font-family: monospace; font-size: 1.5rem; letter-spacing: 5px; font-weight: bold; margin-top: 20px; color: var(--navy); word-wrap: break-word;} 
 
 /* Ações */
-.action-panel h2 { color: var(--gold); background: var(--navy); padding: 10px; margin: -15px -15px 15px -15px; text-align: center; }
+.action-panel h2 { color: var(--gold); background: var(--navy); padding: 10px; margin: -15px -15px 15px -15px; text-align: center; font-size: 1.2rem;}
 .input-group { margin-bottom: 15px; }
 .input-group label { display: block; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold;}
-input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; font-size: 1rem;}
+input { width: 100%; padding: 10px; border: 1px solid #999; border-radius: 4px; font-size: 1rem; }
 
 .btn {
     width: 100%;
@@ -120,7 +155,6 @@ input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; f
 
 /* Decorações */
 .ship-illustration { font-size: 100px; position: absolute; bottom: 10px; right: 20px; opacity: 0.4; color: var(--navy); }
-.compass-decoration { font-size: 80px; text-align: center; opacity: 0.2; margin-top: 20px; display: block;}
 
 /* Efeito Pulso Ouro */
 .gold-pulse {
@@ -133,13 +167,12 @@ input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; f
     100% { transform: scale(1); color: inherit; }
 }
 
-/* =========================================
-   NOVO: CARTA DE TRANSIÇÃO (MODAL)
-========================================= */
+/* Carta Modal */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.8);
+    display: flex; 
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -150,6 +183,7 @@ input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; f
     background-size: cover;
     padding: 40px;
     border-radius: 10px;
+    width: 90%; 
     max-width: 400px;
     text-align: center;
     color: #2c3e50;
@@ -166,8 +200,130 @@ input { width: 90%; padding: 10px; border: 1px solid #999; border-radius: 4px; f
     to { opacity: 1; transform: scale(1); }
 }
 
-/* Responsividade */
+/* Demais componentes */
+.mobile-hidden-input {
+    position: absolute;
+    opacity: 0;
+    z-index: -100;
+    width: 1px;
+    height: 1px;
+    border: none;
+    font-size: 16px; 
+}
+
+.hint-box {
+    cursor: pointer;
+    background: rgba(212, 175, 55, 0.2); 
+    padding: 15px; 
+    border-left: 5px solid var(--gold); 
+    margin-top: 20px;
+    transition: background 0.2s ease;
+}
+.hint-box:hover {
+    background: rgba(212, 175, 55, 0.3); 
+}
+
+/* Estilos de Estrelas */
+.btn-tertiary { 
+    background: #005f73; 
+    border: 1px solid #0a9396;
+}
+
+.star-card {
+    background-image: none !important; 
+    background-color: #0d1b2a;
+    border: 3px solid var(--gold);
+}
+
+#star-container {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 300px;
+    background: linear-gradient(to bottom, #004d40, #000022);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: crosshair;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}
+
+.star-ui {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    z-index: 10;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    pointer-events: none; 
+    text-align: left;
+}
+
+.star-ui h2 { color: var(--gold) !important; }
+.star-entity { position: absolute; background: white; border-radius: 50%; cursor: pointer; transition: transform 0.1s; }
+.star-entity.fake { width: 4px; height: 4px; opacity: 0.5; }
+.star-entity.bright {
+    width: 10px; height: 10px;
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8), 0 0 20px 5px rgba(0, 255, 255, 0.6);
+    opacity: 1; z-index: 5;
+    animation: pulseBrightStar 1s infinite alternate;
+}
+
+@keyframes pulseBrightStar {
+    from { transform: scale(1); }
+    to { transform: scale(1.3); }
+}
+
+/* =========================================
+   MEDIA QUERIES (RESPONSIVIDADE MÓVEL)
+========================================= */
+
+/* Tabletes e Telas Médias */
 @media (max-width: 900px) {
-    .main-content { grid-template-columns: 1fr; }
+    .main-content { 
+        grid-template-areas:
+            "sidebar"
+            "challenge"
+            "action";
+        grid-template-columns: 1fr; 
+    }
+    
+    .sidebar { display: flex; flex-direction: column; padding: 15px; }
+    .sidebar h2 { font-size: 1.2rem; text-align: center; background: var(--navy); color: white; padding: 5px; margin-top: 0; display: block; margin-bottom: 20px; width: 100%;}
+    
+    .resource-item { width: 100%; max-width: 100%; margin-bottom: 15px; } 
+    .compass-decoration { font-size: 80px; text-align: center; opacity: 0.2; margin-top: 20px; display: block; color: white;}
     .ship-illustration { font-size: 60px; }
+}
+
+/* Celulares (Telas Pequenas) */
+@media (max-width: 600px) {
+    .game-container {
+        padding: 10px;
+        margin: 10px;
+        width: 100%;
+        border-width: 2px;
+    }
+    
+    .parchment {
+        padding: 15px;
+        min-height: 200px;
+    }
+
+    .word-slots {
+        font-size: 1.2rem; 
+        letter-spacing: 2px;
+    }
+
+    .logo {
+        font-size: 18px;
+        padding: 5px 10px;
+    }
+
+    .challenge-title {
+        font-size: 1.1rem;
+    }
+
+    .modal-card {
+        padding: 20px;
+    }
 }

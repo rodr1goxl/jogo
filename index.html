@@ -18,17 +18,17 @@
         </header>
 
         <main class="main-content">
-            <aside class="sidebar card">
+            <aside class="sidebar">
                 <h2>Recursos</h2>
                 <div class="resource-item">
-                    <span class="icon material-symbols-outlined">monetization_on</span>
+                    <span class="icon material-symbols-outlined" id="icon-gold">monetization_on</span>
                     <div class="info">
                         <strong>Ouro:</strong>
                         <span id="gold-display">50 moedas</span>
                     </div>
                 </div>
                 <div class="resource-item">
-                    <span class="icon material-symbols-outlined">sailing</span>
+                    <span class="icon material-symbols-outlined" id="icon-health">sailing</span>
                     <div class="info">
                         <strong id="health-text">Saúde do Navio: 100%</strong>
                         <div class="progress-bar-bg">
@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <div class="resource-item">
-                    <span class="icon material-symbols-outlined">location_on</span>
+                    <span class="icon material-symbols-outlined" id="icon-progress">location_on</span>
                     <div class="info">
                         <strong>Progresso:</strong>
-                        <div class="progress-tag" id="progress-text">0/5 etapas concluídas</div>
+                        <div class="progress-tag" id="progress-text">0/15 etapas concluídas</div>
                     </div>
                 </div>
                 <div class="compass-decoration material-symbols-outlined">explore</div>
@@ -52,13 +52,13 @@
                     <hr>
                     <div class="challenge-body">
                         <p id="challenge-desc"><strong>Desafio:</strong> ...</p>
-                        <div class="hint-box">
+                        
+                        <div class="hint-box" id="hint-box">
                             <p id="hint-text"><strong>DICA:</strong> ...</p>
                             <p class="word-slots" id="word-slots">PALAVRA: _ _ _</p>
-                            <small style="display:block; text-align:center; color: var(--navy); margin-top: -10px; font-weight: bold;">
-                                (Use seu teclado para digitar)
-                            </small>
+                            <input type="text" id="mobile-input" class="mobile-hidden-input" autocomplete="off" autocorrect="off" spellcheck="false">
                         </div>
+
                     </div>
                 </div>
                 <div class="ship-illustration material-symbols-outlined">directions_boat</div>
@@ -72,6 +72,7 @@
                 </div>
                 <button class="btn btn-primary" id="btn-submit">Enviar Palpite e Aposta</button>
                 <button class="btn btn-secondary" id="btn-hint">Comprar Letra <br><small>(Custa 5 Ouro)</small></button>
+                <button class="btn btn-tertiary" id="btn-star-nav">Navegação por Estrelas <br><small>(Custa 5 Ouro)</small></button>
             </aside>
         </main>
     </div>
@@ -91,6 +92,18 @@
             <hr>
             <p id="alert-text">...</p>
             <button class="btn btn-primary" id="btn-alert-close" style="margin-top: 20px;">Entendido</button>
+        </div>
+    </div>
+
+    <div id="star-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-card star-card" style="padding: 10px; max-width: 800px; width: 90vw;">
+            <div id="star-container">
+                <div class="star-ui">
+                    <h2 style="border: none; padding: 0; margin-bottom: 5px;">✨ Navegação Estelar</h2>
+                    <p style="margin: 0; font-size: 1rem;">Clique na estrela mais brilhante! Erros: <span id="star-errors">0</span>/3</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="btn-star-close" style="margin-top: 15px;">Abandonar (Perde o Ouro)</button>
         </div>
     </div>
 
