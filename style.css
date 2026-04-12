@@ -327,3 +327,39 @@ input { width: 100%; padding: 10px; border: 1px solid #999; border-radius: 4px; 
         padding: 20px;
     }
 }
+
+/* =========================================
+   ANIMAÇÕES DE LETRAS (ACERTO / ERRO)
+========================================= */
+
+.letter {
+    display: inline-block;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Animação de Onda Verde (Sucesso) */
+.success-wave {
+    color: #4CAF50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    animation: wave 0.5s ease-in-out;
+}
+
+@keyframes wave {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px) scale(1.2); }
+    100% { transform: translateY(0); }
+}
+
+/* Animação de Tremor Vermelho (Erro) */
+.error-shake {
+    color: #F44336;
+    text-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(3px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+    40%, 60% { transform: translate3d(5px, 0, 0); }
+}
