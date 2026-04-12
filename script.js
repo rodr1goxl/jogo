@@ -1,29 +1,31 @@
-// Configuração das Fases
+// Configuração das Fases com 5 dicas progressivas para cada palavra
 const fases = [
-    { titulo: "<span class='material-symbols-outlined'>water</span> 1º Desafio: Navegar pelo Oceano", desc: "Para sair do porto, você precisa deste objeto:", dica: "\"País pioneiro nas Grandes Navegações\"", palavra: "PORTUGAL" },
-    { titulo: "<span class='material-symbols-outlined'>dangerous</span> 2º Desafio: Defesa do Navio", desc: "Piratas à vista! Precisamos carregar os canhões com...", dica: "\"Sou um pó escuro e perigoso que faz barulho no mar.\"", palavra: "POLVORA" },
-    { titulo: "<span class='material-symbols-outlined'>air</span> 3º Desafio: A Calmaria", desc: "As velas estão murchas. Precisamos aguardar o...", dica: "\"Não posso ser visto, mas empurro o navio para a frente.\"", palavra: "VENTO" },
-    { titulo: "<span class='material-symbols-outlined'>map</span> 4º Desafio: Encontrando Terra", desc: "Avistamos uma ilha! Onde marcamos nossa rota?", dica: "\"Navegador que chegou ao Brasil em 1500\"", palavra: "CABRAL" },
-    { titulo: "<span class='material-symbols-outlined'>diamond</span> 5º Desafio: O Mercado Final", desc: "Chegamos ao destino! Qual especiaria viemos buscar?", dica: "\"Quem comandou a primeira viagem ao redor do mundo\"", palavra: "MAGALHÃES" },
-    { titulo: "<span class='material-symbols-outlined'>public</span> 6º Desafio: O Grande Obstáculo", desc: "Qual continente contornamos para chegar às Índias?", dica: "\"É o continente onde fica o Cabo da Boa Esperança.\"", palavra: "AFRICA" },
-    { titulo: "<span class='material-symbols-outlined'>sick</span> 7º Desafio: A Doença dos Mares", desc: "Os marinheiros estão fracos por falta de vitamina C. É o...", dica: "\"Doença comum em longas viagens por falta de frutas frescas.\"", palavra: "ESCORBUTO" },
-    { titulo: "<span class='material-symbols-outlined'>explore</span> 8º Desafio: O Guia", desc: "Estamos perdidos na neblina! Precisamos usar a...", dica: "\"Instrumento que aponta sempre para o Norte magnético.\"", palavra: "BUSSOLA" },
-    { titulo: "<span class='material-symbols-outlined'>local_fire_department</span> 9º Desafio: O Tesouro Ardente", desc: "O que viemos buscar que custa seu peso em ouro?", dica: "\"Especiaria escura, redonda e que arde na boca.\"", palavra: "PIMENTA" },
-    { titulo: "<span class='material-symbols-outlined'>directions_boat</span> 10º Desafio: A Embarcação", desc: "Para navegar ágil contra os ventos, usamos a...", dica: "\"Navio rápido com velas triangulares criado pelos portugueses.\"", palavra: "CARAVELA" },
-    { titulo: "<span class='material-symbols-outlined'>stars</span> 11º Desafio: Medindo os Céus", desc: "Usamos para medir a altura das estrelas e do Sol...", dica: "\"Termina com ÁBIO.\"", palavra: "ASTROLABIO" },
-    { titulo: "<span class='material-symbols-outlined'>storm</span> 12º Desafio: O Fim do Mundo", desc: "Como Bartolomeu Dias chamou o cabo antes do Rei mudar o nome?", dica: "\"Cabo das ...\"", palavra: "TORMENTAS" },
-    { titulo: "<span class='material-symbols-outlined'>checkroom</span> 13º Desafio: Luxo do Oriente", desc: "Além das especiarias, que tecido macio viemos comprar?", dica: "\"Produzida pelo bicho-da-...\"", palavra: "SEDA" },
-    { titulo: "<span class='material-symbols-outlined'>liquor</span> 14º Desafio: O Estoque da Tripulação", desc: "Qual bebida não pode faltar no porão para os marujos?", dica: "\"Bebida clássica de piratas e marinheiros.\"", palavra: "RUM" },
-    { titulo: "<span class='material-symbols-outlined'>anchor</span> 15º Desafio: Terra Firme", desc: "Para o navio parar e descarregarmos as mercadorias, jogamos a...", dica: "\"É de ferro, pesada e vai até o fundo do mar.\"", palavra: "ANCORA" }
+    { titulo: "<span class='material-symbols-outlined'>water</span> 1º Desafio: Navegar pelo Oceano", desc: "Para sair do porto, você precisa deste objeto:", dicas: ["País pioneiro nas Grandes Navegações", "Fica na Península Ibérica", "Faz fronteira com a Espanha", "Sua capital é Lisboa", "Sua bandeira é verde e vermelha"], palavra: "PORTUGAL" },
+    { titulo: "<span class='material-symbols-outlined'>dangerous</span> 2º Desafio: Defesa do Navio", desc: "Piratas à vista! Precisamos carregar os canhões com...", dicas: ["Sou um pó escuro e perigoso que faz barulho no mar.", "Fui inventada pelos chineses", "Muito usada em canhões e mosquetes", "Pode causar grandes explosões", "Cheira a enxofre quando queimada"], palavra: "POLVORA" },
+    { titulo: "<span class='material-symbols-outlined'>air</span> 3º Desafio: A Calmaria", desc: "As velas estão murchas. Precisamos aguardar o...", dicas: ["Não posso ser visto, mas empurro o navio para a frente.", "Faço as velas inflarem", "Sem mim, a calmaria é absoluta", "Mudo de direção constantemente", "Sopro sobre o oceano"], palavra: "VENTO" },
+    { titulo: "<span class='material-symbols-outlined'>map</span> 4º Desafio: Encontrando Terra", desc: "Avistamos uma ilha! Onde marcamos nossa rota?", dicas: ["Navegador que chegou ao Brasil em 1500", "Seu primeiro nome é Pedro", "Seu nome do meio é Álvares", "Partiu de Lisboa com 13 embarcações", "Seu destino final era a Índia"], palavra: "CABRAL" },
+    { titulo: "<span class='material-symbols-outlined'>diamond</span> 5º Desafio: O Mercado Final", desc: "Chegamos ao destino! Qual especiaria viemos buscar?", dicas: ["Quem comandou a primeira viagem ao redor do mundo", "Navegador português a serviço da Espanha", "Descobriu o estreito na América do Sul que leva seu nome", "Morreu nas Filipinas antes de terminar a viagem", "Fernão de ..."], palavra: "MAGALHÃES" },
+    { titulo: "<span class='material-symbols-outlined'>public</span> 6º Desafio: O Grande Obstáculo", desc: "Qual continente contornamos para chegar às Índias?", dicas: ["É o continente onde fica o Cabo da Boa Esperança.", "Os portugueses contornaram toda a sua costa", "Berço da humanidade", "Possui o deserto do Saara", "Fica ao sul da Europa"], palavra: "AFRICA" },
+    { titulo: "<span class='material-symbols-outlined'>sick</span> 7º Desafio: A Doença dos Mares", desc: "Os marinheiros estão fracos por falta de vitamina C. É o...", dicas: ["Doença comum em longas viagens por falta de frutas frescas.", "Causa fraqueza e sangramento nas gengivas", "É prevenida e curada com vitamina C", "Afetou severamente as tripulações na época", "Limões e laranjas são a cura"], palavra: "ESCORBUTO" },
+    { titulo: "<span class='material-symbols-outlined'>explore</span> 8º Desafio: O Guia", desc: "Estamos perdidos na neblina! Precisamos usar a...", dicas: ["Instrumento que aponta sempre para o Norte magnético.", "Possui uma agulha imantada", "Invenção que foi trazida da China", "Essencial para não se perder em mar aberto", "Geralmente vem com a Rosa dos Ventos desenhada"], palavra: "BUSSOLA" },
+    { titulo: "<span class='material-symbols-outlined'>local_fire_department</span> 9º Desafio: O Tesouro Ardente", desc: "O que viemos buscar que custa seu peso em ouro?", dicas: ["Especiaria escura, redonda e que arde na boca.", "Usada para disfarçar gosto de carne velha e conservar alimentos", "Tão valorizada que já foi usada como moeda de troca", "Pode ser do reino, branca ou preta", "Faz você espirrar se inalar o pó"], palavra: "PIMENTA" },
+    { titulo: "<span class='material-symbols-outlined'>directions_boat</span> 10º Desafio: A Embarcação", desc: "Para navegar ágil contra os ventos, usamos a...", dicas: ["Navio rápido com velas triangulares criado pelos portugueses.", "Embarcação ágil, leve e de fácil manobra", "Usada nas viagens de Colombo e Cabral", "Permitia 'bolinar' (navegar em zigue-zague contra o vento)", "Seu nome soa como 'cara bela'"], palavra: "CARAVELA" },
+    { titulo: "<span class='material-symbols-outlined'>stars</span> 11º Desafio: Medindo os Céus", desc: "Usamos para medir a altura das estrelas e do Sol...", dicas: ["Termina com ÁBIO.", "Usado para medir a altura dos astros acima do horizonte", "Ajuda a calcular a latitude do navio", "Antigo instrumento de metal em formato circular", "Seu nome significa 'tomador de estrelas'"], palavra: "ASTROLABIO" },
+    { titulo: "<span class='material-symbols-outlined'>storm</span> 12º Desafio: O Fim do Mundo", desc: "Como Bartolomeu Dias chamou o cabo antes do Rei mudar o nome?", dicas: ["Cabo das ...", "Fica no extremo sul da África", "Foi dobrado pela primeira vez por Bartolomeu Dias", "Era um local temido por suas tempestades mortais", "Depois foi rebatizado pelo rei como Boa Esperança"], palavra: "TORMENTAS" },
+    { titulo: "<span class='material-symbols-outlined'>checkroom</span> 13º Desafio: Luxo do Oriente", desc: "Além das especiarias, que tecido macio viemos comprar?", dicas: ["Produzida pelo bicho-da-...", "Tecido muito valioso que deu nome a uma famosa Rota", "Originária da China Antiga", "Material extremamente macio, leve e brilhante", "Símbolo de luxo nas roupas dos nobres europeus"], palavra: "SEDA" },
+    { titulo: "<span class='material-symbols-outlined'>liquor</span> 14º Desafio: O Estoque da Tripulação", desc: "Qual bebida não pode faltar no porão para os marujos?", dicas: ["Bebida clássica de piratas e marinheiros.", "Destilada a partir do melaço da cana-de-açúcar", "Bebida alcoólica de alto teor", "Misturada com água e limão (para evitar escorbuto), virava o 'grogue'", "É a bebida favorita do Capitão Jack Sparrow"], palavra: "RUM" },
+    { titulo: "<span class='material-symbols-outlined'>anchor</span> 15º Desafio: Terra Firme", desc: "Para o navio parar e descarregarmos as mercadorias, jogamos a...", dicas: ["É de ferro, pesada e vai até o fundo do mar.", "Símbolo mais comum em tatuagens de marinheiros", "Usada para fixar o navio no fundo e evitar que a maré o leve", "Possui duas pontas curvas chamadas de unhas", "Dizemos 'levantar' ela para zarpar, e 'lançar' para estacionar"], palavra: "ANCORA" }
 ];
 
 // Variáveis de Estado
+let jogoIniciado = false;
 let faseAtual = 0;
-let ouro = 40;
+let ouro = 50;
 let saudeNavio = 100;
 let letrasReveladas = [];
 let letrasFixas = []; 
-let blockInput = false; // Impede interações durante as animações
+let blockInput = false; 
+let dicasMostradas = 1; 
 
 // Elementos da Interface
 const elTitulo = document.getElementById('challenge-title');
@@ -42,6 +44,16 @@ const alertTitle = document.getElementById('alert-title');
 const alertText = document.getElementById('alert-text');
 const btnAlertClose = document.getElementById('btn-alert-close');
 
+// ==========================================
+// CONTROLE DA TELA INICIAL
+// ==========================================
+document.getElementById('btn-start-game').addEventListener('click', () => {
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('game-screen').style.display = 'block';
+    jogoIniciado = true;
+    carregarFase();
+});
+
 // Limpar texto
 function formatarTexto(texto) {
     return texto.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -58,10 +70,11 @@ function carregarFase() {
     letrasReveladas = Array(fase.palavra.length).fill("_");
     letrasFixas = Array(fase.palavra.length).fill(false);
     blockInput = false;
+    dicasMostradas = 1; 
     
     elTitulo.innerHTML = fase.titulo;
     elDesc.innerHTML = `<strong>Desafio:</strong> ${fase.desc}`;
-    elDica.innerHTML = `<strong>DICA:</strong> ${fase.dica}`;
+    elDica.innerHTML = `<strong>DICA 1:</strong> ${fase.dicas[0]}`; 
     elProgresso.innerText = `${faseAtual}/${fases.length} etapas concluídas`;
     
     atualizarSlots();
@@ -70,7 +83,6 @@ function carregarFase() {
 }
 
 function atualizarSlots() {
-    // Renderiza cada letra em um span separado para podermos animar individualmente
     const spans = letrasReveladas.map((letra, index) => {
         return `<span class="letter" id="letter-${index}">${letra}</span>`;
     }).join(" ");
@@ -97,7 +109,7 @@ function atualizarSaude() {
 
 function mostrarAlerta(mensagem, titulo = "⚠️ Aviso") {
     alertTitle.innerText = titulo;
-    alertText.innerText = mensagem;
+    alertText.innerHTML = mensagem;
     alertModalOverlay.style.display = 'flex';
 }
 
@@ -122,7 +134,7 @@ function revelarLetraAleatoria() {
 
 // Funções base de Digitação
 function inserirLetra(letra) {
-    if (blockInput) return;
+    if (blockInput || !jogoIniciado) return;
     const idx = letrasReveladas.indexOf("_");
     if (idx !== -1) {
         letrasReveladas[idx] = letra.toUpperCase();
@@ -131,7 +143,7 @@ function inserirLetra(letra) {
 }
 
 function apagarLetra() {
-    if (blockInput) return;
+    if (blockInput || !jogoIniciado) return;
     for (let i = letrasReveladas.length - 1; i >= 0; i--) {
         if (letrasReveladas[i] !== "_" && !letrasFixas[i]) {
             letrasReveladas[i] = "_";
@@ -142,12 +154,13 @@ function apagarLetra() {
 }
 
 hintBox.addEventListener('click', () => {
+    if (!jogoIniciado) return;
     mobileInput.focus();
     mobileInput.value = " ";
 });
 
 mobileInput.addEventListener('input', (e) => {
-    if (blockInput) {
+    if (blockInput || !jogoIniciado) {
         mobileInput.value = " "; 
         return;
     }
@@ -158,6 +171,7 @@ mobileInput.addEventListener('input', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
+    if (!jogoIniciado) return; // Só permite se o jogo já começou
     if (blockInput) return;
     if (alertModalOverlay.style.display === 'flex' || document.getElementById('star-modal').style.display === 'flex') return;
     if (faseAtual >= fases.length || saudeNavio <= 0 || ouro <= 0) return;
@@ -174,7 +188,7 @@ document.addEventListener('keydown', (e) => {
 
 // Botões do jogo
 document.getElementById('btn-hint').addEventListener('click', () => {
-    if (blockInput) return;
+    if (blockInput || !jogoIniciado) return;
     const custoDica = 5;
     if (ouro < custoDica) {
         mostrarAlerta("Ouro insuficiente para comprar uma letra!");
@@ -189,7 +203,7 @@ document.getElementById('btn-hint').addEventListener('click', () => {
 });
 
 document.getElementById('btn-submit').addEventListener('click', () => {
-    if (blockInput) return;
+    if (blockInput || !jogoIniciado) return;
     
     const palpite = letrasReveladas.join("");
     const aposta = parseInt(elInputAposta.value);
@@ -208,21 +222,19 @@ document.getElementById('btn-submit').addEventListener('click', () => {
         return;
     }
 
-    blockInput = true; // Bloqueia interações durante as animações
+    blockInput = true;
 
     if (palpite === respostaCerta) {
         ouro += aposta;
         atualizarOuro(true);
         
-        // Animação de Onda Verde (Sucesso)
         const letters = document.querySelectorAll('.letter');
         letters.forEach((el, index) => {
             setTimeout(() => {
                 el.classList.add('success-wave');
-            }, index * 100); // Onda passando 100ms por letra
+            }, index * 100); 
         });
 
-        // Espera a animação acabar para avançar de fase
         setTimeout(() => {
             faseAtual++;
             carregarFase();
@@ -235,18 +247,15 @@ document.getElementById('btn-submit').addEventListener('click', () => {
         atualizarOuro(true);
         atualizarSaude();
         
-        // Animação de Tremor Vermelho (Erro)
         const letters = document.querySelectorAll('.letter');
         letters.forEach(el => el.classList.add('error-shake'));
         
-        // Espera o tremor acabar
         setTimeout(() => {
             if (ouro <= 0 || saudeNavio <= 0) {
                 perderJogo(false);
             } else {
                 mostrarAlerta("Resposta errada! O navio bateu nos recifes e você perdeu moedas!", "💥 Impacto!");
                 
-                // Apaga todas as letras que não são fixas (dicas)
                 for (let i = 0; i < letrasReveladas.length; i++) {
                     if (!letrasFixas[i]) {
                         letrasReveladas[i] = "_";
@@ -293,19 +302,18 @@ let starErrors = 0;
 let speedMultiplier = 1;
 
 document.getElementById('btn-star-nav').addEventListener('click', () => {
-    if (blockInput) return;
+    if (blockInput || !jogoIniciado) return;
     const custoNav = 5;
     if (ouro < custoNav) {
         mostrarAlerta("Ouro insuficiente para a Navegação Estelar!");
         return;
     }
     
-    // Verifica se ainda tem letra para revelar antes de gastar
-    const palavraLimpa = formatarTexto(fases[faseAtual].palavra);
-    let temLetra = letrasFixas.includes(false);
+    const temLetra = letrasFixas.includes(false);
+    const temDica = dicasMostradas < 5 && dicasMostradas < fases[faseAtual].dicas.length;
     
-    if (!temLetra) {
-        mostrarAlerta("Todas as letras já foram reveladas nesta fase!");
+    if (!temLetra && !temDica) {
+        mostrarAlerta("Todas as letras e dicas já foram reveladas nesta fase!");
         return;
     }
 
@@ -324,7 +332,6 @@ function iniciarNavegacaoEstrelas() {
     speedMultiplier = 1;
     starErrorsDisplay.innerText = "0";
     
-    // Limpa as estrelas antigas preservando a UI
     const estrelasAntigas = starContainer.querySelectorAll('.star-entity');
     estrelasAntigas.forEach(e => e.remove());
     starsData = [];
@@ -332,10 +339,8 @@ function iniciarNavegacaoEstrelas() {
     const width = starContainer.clientWidth;
     const height = starContainer.clientHeight;
 
-    // Criar estrelas falsas (lentas)
     for(let i=0; i<25; i++) criarEstrela(false, width, height);
     
-    // Criar estrela alvo (mais brilhante)
     criarEstrela(true, width, height);
 
     starContainer.addEventListener('click', clickEstrelaErrada);
@@ -361,7 +366,7 @@ function criarEstrela(isTarget, maxWidth, maxHeight) {
 
     if (isTarget) {
         el.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita contabilizar erro
+            e.stopPropagation(); 
             vencerNavegacao();
         });
     }
@@ -395,7 +400,6 @@ function animarEstrelas() {
         star.x += curVx;
         star.y += curVy;
 
-        // Rebater nas bordas
         if (star.x <= 0 || star.x + star.size >= width) {
             star.vx *= -1;
             star.x = Math.max(0, Math.min(star.x, width - star.size));
@@ -414,8 +418,23 @@ function animarEstrelas() {
 
 function vencerNavegacao() {
     encerrarNavegacaoEstrelas();
-    mostrarAlerta("Você focou na estrela certa e descobriu uma pista! (1 Letra Revelada)", "⭐ Sucesso Estelar!");
-    revelarLetraAleatoria();
+    
+    let mensagemAlerta = "Você focou na estrela certa e descobriu uma pista!<br><br>";
+    
+    const letraRevelada = revelarLetraAleatoria();
+    if (letraRevelada) {
+        mensagemAlerta += "⭐ <strong>1 Letra Revelada!</strong><br>";
+    }
+    
+    const fase = fases[faseAtual];
+    if (dicasMostradas < 5 && dicasMostradas < fase.dicas.length) {
+        const novaDica = fase.dicas[dicasMostradas];
+        dicasMostradas++;
+        elDica.innerHTML += `<br><br><strong>DICA ${dicasMostradas}:</strong> ${novaDica}`;
+        mensagemAlerta += `💡 <strong>Você ganhou uma NOVA DICA!</strong>`;
+    }
+
+    mostrarAlerta(mensagemAlerta, "✨ Sucesso Estelar!");
 }
 
 function encerrarNavegacaoEstrelas() {
@@ -423,6 +442,3 @@ function encerrarNavegacaoEstrelas() {
     starContainer.removeEventListener('click', clickEstrelaErrada);
     starModal.style.display = 'none';
 }
-
-// Início imediato
-carregarFase();

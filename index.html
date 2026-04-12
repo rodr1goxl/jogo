@@ -8,7 +8,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 <body>
-    <div class="game-container fade-in">
+    <div class="game-container fade-in" id="start-screen">
+        <header class="header">
+            <div class="logo">
+                <span class="material-symbols-outlined" style="vertical-align: bottom;">explore</span> 
+                ROTA DAS ESPECIARIAS
+            </div>
+            <div class="welcome-banner">1498 - A Era dos Descobrimentos</div>
+        </header>
+
+        <main style="display: flex; justify-content: center; width: 100%;">
+            <div class="parchment start-card">
+                <h1 class="challenge-title title-center">
+                    <span class="material-symbols-outlined">menu_book</span> O Chamado do Rei
+                </h1>
+                <hr>
+                <p class="lore-text">
+                    No ano de 1498, o Rei Manuel I o convocou para a mais ambiciosa das expedições. Sua missão: comandar a frota portuguesa rumo ao desconhecido, contornar a África e alcançar a mítica <strong>Rota das Índias</strong>.
+                </p>
+                <p class="lore-text">
+                    Riquezas incalculáveis aguardam por aqueles que retornarem com os porões cheios de especiarias. Porém, o mar é implacável, repleto de piratas, tormentas, calmaria e doenças mortais.
+                </p>
+                
+                <div class="rules-box">
+                    <h2 class="rules-title">📜 Diário de Bordo (Mecânicas)</h2>
+                    <ul>
+                        <li><strong>A Missão:</strong> Descubra a palavra secreta a cada parada para avançar na rota.</li>
+                        <li><strong>Mercado:</strong> Aposte seu <span class="highlight-gold">Ouro</span>. Acertar soma suas apostas, mas errar subtrai de seus cofres.</li>
+                        <li><strong>Perigo:</strong> Errar o palpite danifica o navio. Se a <span class="highlight-health">Saúde</span> chegar a zero, a frota afunda!</li>
+                        <li><strong>Exploração:</strong> Compre letras com os mercadores ou use a <em>Navegação Estelar</em> para revelar novas pistas.</li>
+                    </ul>
+                </div>
+                
+                <button class="btn btn-primary btn-start" id="btn-start-game">
+                    <span class="material-symbols-outlined" style="vertical-align: bottom;">sailing</span> Levantar Âncoras!
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <div class="game-container fade-in" id="game-screen" style="display: none;">
         <header class="header">
             <div class="logo">
                 <span class="material-symbols-outlined" style="vertical-align: bottom;">explore</span> 
