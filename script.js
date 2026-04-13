@@ -394,7 +394,7 @@ let speedMultiplier = 1;
 
 document.getElementById('btn-star-nav').addEventListener('click', () => {
     if (blockInput || !jogoIniciado) return;
-    const custoNav = 5;
+    const custoNav = 10;
     if (ouro < custoNav) {
         mostrarAlerta("Ouro insuficiente para a Navegação Estelar!");
         return;
