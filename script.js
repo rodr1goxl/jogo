@@ -181,8 +181,16 @@ document.addEventListener('keydown', (e) => {
 
     const key = e.key.toUpperCase();
 
-    if (key === 'ENTER') document.getElementById('btn-submit').click();
-    else if (/^[A-ZÇ]$/.test(key) && key.length === 1) inserirLetra(key);
+    if (key === 'ENTER') {
+        document.getElementById('btn-submit').click();
+        return;
+    }
+
+    // CORREÇÃO: Se o input mobile estiver focado, ignoramos as letras aqui no keydown
+    // pois o evento 'input' do mobileInput já vai cuidar delas. Isso evita a duplicação!
+    if (activeEl && activeEl.id === 'mobile-input') return;
+
+    if (/^[A-ZÇ]$/.test(key) && key.length === 1) inserirLetra(key);
     else if (key === 'BACKSPACE') apagarLetra();
 });
 
