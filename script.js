@@ -61,8 +61,7 @@ function formatarTexto(texto) {
 
 function carregarFase() {
     if (faseAtual >= fases.length) {
-        if (ouro >= 100) vencerJogo();
-        else perderJogo(true);
+        finalizarJogo();
         return;
     }
 
@@ -85,8 +84,9 @@ function carregarFase() {
 function atualizarSlots() {
     const spans = letrasReveladas.map((letra, index) => {
         return `<span class="letter" id="letter-${index}">${letra}</span>`;
-    }).join(" ");
-    elSlots.innerHTML = `PALAVRA: ${spans}`;
+    }).join("");
+    
+    elSlots.innerHTML = `<span class="word-label">PALAVRA:</span> <div class="letters-wrap">${spans}</div>`;
 }
 
 function atualizarOuro(animar = true) {
@@ -171,7 +171,7 @@ mobileInput.addEventListener('input', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-    if (!jogoIniciado) return; // Só permite se o jogo já começou
+    if (!jogoIniciado) return; 
     if (blockInput) return;
     if (alertModalOverlay.style.display === 'flex' || document.getElementById('star-modal').style.display === 'flex') return;
     if (faseAtual >= fases.length || saudeNavio <= 0 || ouro <= 0) return;
@@ -252,7 +252,7 @@ document.getElementById('btn-submit').addEventListener('click', () => {
         
         setTimeout(() => {
             if (ouro <= 0 || saudeNavio <= 0) {
-                perderJogo(false);
+                perderJogoMidGame();
             } else {
                 mostrarAlerta("Resposta errada! O navio bateu nos recifes e você perdeu moedas!", "💥 Impacto!");
                 
@@ -272,22 +272,113 @@ btnAlertClose.addEventListener('click', () => {
     alertModalOverlay.style.display = 'none';
 });
 
-function vencerJogo() {
-    elTitulo.innerHTML = "<span class='material-symbols-outlined'>emoji_events</span> ROTA CONCLUÍDA!";
-    elDesc.innerHTML = `Parabéns, Almirante! Você chegou às Índias com a meta batida: <strong>${ouro} moedas</strong> e o navio a salvo!`;
-    document.querySelector('.challenge-body').style.textAlign = "center";
-    document.querySelector('.action-panel').style.display = "none";
-    elSlots.innerHTML = "<span class='material-symbols-outlined' style='font-size: 2rem;'>anchor</span><br>NAVIO CARREGADO DE ESPECIARIAS";
+
+// ==========================================
+// EFEITOS DE PARTÍCULAS
+// ==========================================
+function criarChuvaDeOuro() {
+    const duration = 6000;
+    const end = Date.now() + duration;
+    
+    (function frame() {
+        const coin = document.createElement('div');
+        coin.classList.add('coin-particle');
+        coin.style.left = Math.random() * 100 + 'vw';
+        coin.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(coin);
+        
+        setTimeout(() => coin.remove(), 4000);
+        
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
 }
 
-function perderJogo(motivoOuroFinal = false) {
-    elTitulo.innerHTML = "<span class='material-symbols-outlined'>skull</span> FIM DA JORNADA";
-    if (motivoOuroFinal) elDesc.innerHTML = `Você chegou às Índias, porém com apenas <strong>${ouro} moedas</strong>. O rei exigia pelo menos 100 moedas. Você foi preso por dívidas!`;
-    else if (saudeNavio <= 0) elDesc.innerHTML = "Seu navio sofreu muitos danos, partiu ao meio e afundou no oceano.";
-    else elDesc.innerHTML = "Suas moedas acabaram e a tripulação organizou um motim contra você.";
+function criarChuvaTriste() {
+    const duration = 5000;
+    const end = Date.now() + duration;
+    
+    (function frame() {
+        const drop = document.createElement('div');
+        drop.classList.add('rain-particle');
+        drop.style.left = Math.random() * 100 + 'vw';
+        drop.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
+        document.body.appendChild(drop);
+        
+        setTimeout(() => drop.remove(), 1000);
+        
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
+}
+
+// ==========================================
+// TELAS DE FINALIZAÇÃO DA JORNADA
+// ==========================================
+function finalizarJogo() {
+    document.querySelector('.action-panel').style.display = "none";
+    document.querySelector('.challenge-body').style.textAlign = "center";
+    
+    let titulo = "";
+    let desc = "";
+    let icone = "";
+    let animClass = "";
+    
+    const container = document.getElementById('game-screen');
+
+    if (ouro < 60) {
+        titulo = "FIM DA JORNADA: RUÍNA TOTAL";
+        icone = "skull";
+        animClass = "icon-anim-ruina";
+        container.classList.add('end-ruina');
+        criarChuvaTriste();
+        desc = `<h2>💰 Ouro Final: ${ouro}</h2><p><strong>Tragédia!</strong> Você chegou às Índias, mas retornou quase sem mercadorias. A Coroa considerou a expedição um desperdício. Seus bens foram confiscados e você passará o resto dos seus dias nas úmidas masmorras de Lisboa.</p>`;
+    
+    } else if (ouro >= 60 && ouro <= 99) {
+        titulo = "FIM DA JORNADA: DÍVIDA REAL";
+        icone = "warning";
+        animClass = "icon-anim-divida";
+        container.classList.add('end-divida');
+        desc = `<h2>💰 Ouro Final: ${ouro}</h2><p><strong>Sobrevivemos, mas a que custo?</strong> Você completou a rota, porém os lucros não cobriram os altos custos do Rei. Você e sua tripulação terão que trabalhar exaustivamente por muitos anos para quitar a enorme dívida.</p>`;
+    
+    } else if (ouro >= 100 && ouro <= 199) {
+        titulo = "ROTA CONCLUÍDA: SUCESSO!";
+        icone = "emoji_events";
+        animClass = "icon-anim-sucesso";
+        container.classList.add('end-sucesso');
+        desc = `<h2>💰 Ouro Final: ${ouro}</h2><p><strong>Missão cumprida, Capitão!</strong> Você retornou a Portugal com os porões abarrotados de especiarias valiosas. O Rei está satisfeito e sua glória como explorador está garantida.</p>`;
+    
+    } else {
+        titulo = "ROTA CONCLUÍDA: LENDA DOS MARES";
+        icone = "diamond";
+        animClass = "icon-anim-lenda";
+        container.classList.add('end-lenda');
+        criarChuvaDeOuro();
+        desc = `<h2>💰 Ouro Final: ${ouro}</h2><p><strong>Inacreditável!</strong> Você não apenas completou a missão, mas acumulou uma fortuna colossal, desafiando todos os prognósticos. Os bardos e poetas cantarão sobre a sua imbatível frota por séculos. Você é uma lenda viva!</p>`;
+    }
+
+    elTitulo.innerHTML = `<span class='material-symbols-outlined ${animClass}'>${icone}</span> ${titulo}`;
+    elDesc.innerHTML = desc;
+    elSlots.innerHTML = `<span class='material-symbols-outlined ${animClass}' style='font-size: 3rem;'>anchor</span><br><br>FIM DA EXPEDIÇÃO`;
+}
+
+function perderJogoMidGame() {
+    elTitulo.innerHTML = "<span class='material-symbols-outlined icon-anim-ruina'>skull</span> FIM DA JORNADA";
+    document.getElementById('game-screen').classList.add('end-ruina');
+    criarChuvaTriste();
+
+    if (saudeNavio <= 0) {
+        elDesc.innerHTML = "<h3>💥 Naufrágio</h3>Seu navio sofreu muitos danos durante as investidas, partiu ao meio e afundou nas profundezas do oceano sem deixar rastros.";
+    } else {
+        elDesc.innerHTML = "<h3>⚔️ Motim</h3>Suas moedas acabaram e a ração da tripulação chegou ao fim. Sem esperança de lucro, seus marinheiros organizaram um motim sanguinário contra você.";
+        elOuro.innerText = "0 - Falido";
+    }
     
     document.querySelector('.action-panel').style.display = "none";
-    if (!motivoOuroFinal) elOuro.innerText = "0 - Falido";
+    document.querySelector('.challenge-body').style.textAlign = "center";
+    elSlots.innerHTML = "<span class='material-symbols-outlined icon-anim-ruina' style='font-size: 3rem;'>water_drop</span><br><br>EXPEDIÇÃO FRACASSADA";
 }
 
 // ==========================================

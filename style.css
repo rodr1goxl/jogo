@@ -35,6 +35,9 @@ body {
     width: 95%;
     max-width: 1200px;
     background-image: url(imagens/papel.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border: 2px solid var(--gold-translucent);
     padding: 20px;
     border-radius: 12px;
@@ -44,11 +47,18 @@ body {
 }
 
 /* =========================================
-   ESTILOS DA TELA INICIAL (NOVOS)
+   ESTILOS DA TELA INICIAL
 ========================================= */
 .start-card {
-    max-width: 750px;
+    max-width: 1000px; 
     text-align: center;
+    padding: 40px 20px;
+}
+
+@media (min-width: 900px) {
+    .start-card {
+        padding: 40px 80px; 
+    }
 }
 
 .title-center {
@@ -119,7 +129,7 @@ body {
 }
 
 /* =========================================
-   O RESTO DO SEU CSS EXISTENTE 
+   ELEMENTOS DO JOGO 
 ========================================= */
 
 /* Header */
@@ -268,16 +278,32 @@ body {
 .challenge-title { font-size: 1.5rem; font-weight: 600; color: #2c3e50; margin-top: 0; display: flex; align-items: center; gap: 12px; }
 .challenge-body p { line-height: 1.6; color: #444; }
 
+/* ======== NOVO ESTILO DAS PALAVRAS ======== */
 .word-slots { 
     font-family: monospace; 
     font-size: 1.6rem; 
-    letter-spacing: 6px; 
     font-weight: bold; 
     margin-top: 25px; 
     color: var(--navy); 
-    word-wrap: break-word;
     text-shadow: 1px 1px 0 rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
 } 
+
+.letters-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+}
+
+.letter {
+    display: inline-block;
+    transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
+    min-width: 1.2rem;
+    text-align: center;
+}
+/* ========================================== */
 
 .action-panel h2 { 
     color: var(--gold); 
@@ -490,8 +516,12 @@ input:focus {
     }
 
     .word-slots {
-        font-size: 1.3rem; 
-        letter-spacing: 3px;
+        font-size: 1.4rem; 
+        gap: 8px;
+    }
+
+    .letters-wrap {
+        gap: 6px;
     }
 
     .logo {
@@ -506,11 +536,6 @@ input:focus {
     .modal-card {
         padding: 25px;
     }
-}
-
-.letter {
-    display: inline-block;
-    transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
 }
 
 .success-wave {
@@ -536,4 +561,78 @@ input:focus {
     20%, 80% { transform: translate3d(4px, 0, 0); }
     30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
     40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+/* =========================================
+   EFEITOS DE FINALIZAÇÃO (NOVOS)
+========================================= */
+
+/* Filtros na tela inteira */
+.end-ruina { filter: grayscale(80%) hue-rotate(180deg) brightness(0.8); transition: all 2s ease; }
+.end-divida { filter: sepia(60%) contrast(1.1); transition: all 2s ease; }
+.end-sucesso .parchment { animation: glowSucesso 2s infinite alternate; }
+.end-lenda .parchment { border: 3px solid #FFD700; animation: epicGlow 1s infinite alternate; }
+
+@keyframes glowSucesso {
+    from { box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+    to { box-shadow: 0 0 30px rgba(212, 175, 55, 0.8); transform: translateY(-5px); }
+}
+
+@keyframes epicGlow {
+    from { box-shadow: 0 0 20px #FFD700; transform: scale(1); }
+    to { box-shadow: 0 0 60px #FFD700, 0 0 20px #FFA500; transform: scale(1.03); }
+}
+
+/* Classes para os Ícones do Título */
+.icon-anim-ruina { animation: sadDrop 2s ease forwards; color: #555 !important; }
+.icon-anim-divida { animation: pulseWarning 1.5s infinite; color: #d32f2f !important; }
+.icon-anim-sucesso { animation: bounceHappy 1.5s infinite; color: #FFD700 !important; }
+.icon-anim-lenda { animation: spinEpic 3s infinite linear; color: #FFD700 !important; font-size: 2.5rem !important; text-shadow: 0 0 15px #FFD700; }
+
+@keyframes sadDrop { 
+    0% { transform: translateY(-20px); opacity: 0; } 
+    100% { transform: translateY(0); opacity: 1; } 
+}
+@keyframes pulseWarning { 
+    0%, 100% { transform: scale(1); } 
+    50% { transform: scale(1.2); } 
+}
+@keyframes bounceHappy { 
+    0%, 100% { transform: translateY(0); } 
+    50% { transform: translateY(-10px); } 
+}
+@keyframes spinEpic { 
+    100% { transform: rotateY(360deg) scale(1.2); } 
+}
+
+/* Elementos Gerados via Javascript (Partículas) */
+.coin-particle {
+    position: fixed; 
+    top: -50px;
+    width: 25px; height: 25px;
+    background: radial-gradient(circle, #FFD700 30%, #B8860B 100%);
+    border-radius: 50%;
+    border: 2px solid #DAA520;
+    box-shadow: inset 0 0 5px #FFF, 0 4px 6px rgba(0,0,0,0.3);
+    animation: fall linear forwards;
+    z-index: 9999; 
+    pointer-events: none;
+}
+
+.rain-particle {
+    position: fixed; 
+    top: -50px;
+    width: 2px; height: 30px;
+    background: rgba(100, 150, 200, 0.6);
+    animation: fallRain linear forwards;
+    z-index: 9999; 
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes fallRain {
+    to { transform: translateY(110vh); opacity: 0.2; }
 }
