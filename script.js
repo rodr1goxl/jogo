@@ -17,6 +17,13 @@ const fases = [
     { titulo: "<span class='material-symbols-outlined'>anchor</span> 15º Desafio: Terra Firme", desc: "Para o navio parar e descarregarmos as mercadorias, jogamos a...", dicas: ["É de ferro, pesada e vai até o fundo do mar.", "Símbolo mais comum em tatuagens de marinheiros", "Usada para fixar o navio no fundo e evitar que a maré o leve", "Possui duas pontas curvas chamadas de unhas", "Dizemos 'levantar' ela para zarpar, e 'lançar' para estacionar"], palavra: "ANCORA" }
 ];
 
+// ==========================================
+// EFEITOS SONOROS (Altere os nomes se necessário)
+// ==========================================
+const somAcerto = new Audio('sons/acerto.mp3');
+const somErro = new Audio('sons/erro.mp3');
+const somDerrota = new Audio('sons/derrota.mp3');
+
 // Variáveis de Estado
 let jogoIniciado = false;
 let faseAtual = 0;
@@ -186,8 +193,6 @@ document.addEventListener('keydown', (e) => {
         return;
     }
 
-    // CORREÇÃO: Se o input mobile estiver focado, ignoramos as letras aqui no keydown
-    // pois o evento 'input' do mobileInput já vai cuidar delas. Isso evita a duplicação!
     if (activeEl && activeEl.id === 'mobile-input') return;
 
     if (/^[A-ZÇ]$/.test(key) && key.length === 1) inserirLetra(key);
@@ -233,6 +238,10 @@ document.getElementById('btn-submit').addEventListener('click', () => {
     blockInput = true;
 
     if (palpite === respostaCerta) {
+        // Toca o som de acerto
+        somAcerto.currentTime = 0;
+        somAcerto.play().catch(e => console.log("O navegador bloqueou o áudio:", e));
+
         ouro += aposta;
         atualizarOuro(true);
         
@@ -251,6 +260,12 @@ document.getElementById('btn-submit').addEventListener('click', () => {
     } else {
         ouro -= aposta;
         saudeNavio -= 25; 
+        
+        // Toca som de erro (apenas se ainda tiver saúde/ouro para jogar, senão tocará o de derrota depois)
+        if (ouro > 0 && saudeNavio > 0) {
+            somErro.currentTime = 0;
+            somErro.play().catch(e => console.log("O navegador bloqueou o áudio:", e));
+        }
         
         atualizarOuro(true);
         atualizarSaude();
@@ -373,6 +388,10 @@ function finalizarJogo() {
 }
 
 function perderJogoMidGame() {
+    // Toca som de derrota
+    somDerrota.currentTime = 0;
+    somDerrota.play().catch(e => console.log("O navegador bloqueou o áudio:", e));
+
     elTitulo.innerHTML = "<span class='material-symbols-outlined icon-anim-ruina'>skull</span> FIM DA JORNADA";
     document.getElementById('game-screen').classList.add('end-ruina');
     criarChuvaTriste();
