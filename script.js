@@ -1,19 +1,46 @@
 // Configuração das Fases com 5 dicas progressivas para cada palavra
 const fases = [
-    { titulo: "<span class='material-symbols-outlined'>water</span> 1º Desafio: Navegar pelo Oceano", desc: "Para sair do porto, você precisa deste objeto:", dicas: ["País pioneiro nas Grandes Navegações", "Fica na Península Ibérica", "Faz fronteira com a Espanha", "Sua capital é Lisboa", "Sua bandeira é verde e vermelha"], palavra: "PORTUGAL" },
+    { titulo: "<span class='material-symbols-outlined'>water</span> 1º Desafio: Navegar pelo Oceano", desc: "Saia do porto:", dicas: ["País pioneiro nas Grandes Navegações", "Fica na Península Ibérica", "Faz fronteira com a Espanha", "Sua capital é Lisboa", "Sua bandeira é verde e vermelha"], palavra: "PORTUGAL" },
     { titulo: "<span class='material-symbols-outlined'>dangerous</span> 2º Desafio: Defesa do Navio", desc: "Piratas à vista! Precisamos carregar os canhões com...", dicas: ["Sou um pó escuro e perigoso que faz barulho no mar.", "Fui inventada pelos chineses", "Muito usada em canhões e mosquetes", "Pode causar grandes explosões", "Cheira a enxofre quando queimada"], palavra: "POLVORA" },
     { titulo: "<span class='material-symbols-outlined'>air</span> 3º Desafio: A Calmaria", desc: "As velas estão murchas. Precisamos aguardar o...", dicas: ["Não posso ser visto, mas empurro o navio para a frente.", "Faço as velas inflarem", "Sem mim, a calmaria é absoluta", "Mudo de direção constantemente", "Sopro sobre o oceano"], palavra: "VENTO" },
     { titulo: "<span class='material-symbols-outlined'>map</span> 4º Desafio: Encontrando Terra", desc: "Avistamos uma ilha! Onde marcamos nossa rota?", dicas: ["Navegador que chegou ao Brasil em 1500", "Seu primeiro nome é Pedro", "Seu nome do meio é Álvares", "Partiu de Lisboa com 13 embarcações", "Seu destino final era a Índia"], palavra: "CABRAL" },
-    { titulo: "<span class='material-symbols-outlined'>diamond</span> 5º Desafio: O Mercado Final", desc: "Chegamos ao destino! Qual especiaria viemos buscar?", dicas: ["Quem comandou a primeira viagem ao redor do mundo", "Navegador português a serviço da Espanha", "Descobriu o estreito na América do Sul que leva seu nome", "Morreu nas Filipinas antes de terminar a viagem", "Fernão de ..."], palavra: "MAGALHÃES" },
+    { titulo: "<span class='material-symbols-outlined'>south_america</span> 5º Desafio: O mundo não é plano??", desc: "Provando que é possível chegar ao Oriente navegando pelo Atlântico.", dicas: ["Quem comandou a primeira viagem ao redor do mundo", "Navegador português a serviço da Espanha", "Descobriu o estreito na América do Sul que leva seu nome", "Morreu nas Filipinas antes de terminar a viagem", "Fernão de ..."], palavra: "MAGALHÃES" },
     { titulo: "<span class='material-symbols-outlined'>public</span> 6º Desafio: O Grande Obstáculo", desc: "Qual continente contornamos para chegar às Índias?", dicas: ["É o continente onde fica o Cabo da Boa Esperança.", "Os portugueses contornaram toda a sua costa", "Berço da humanidade", "Possui o deserto do Saara", "Fica ao sul da Europa"], palavra: "AFRICA" },
-    { titulo: "<span class='material-symbols-outlined'>sick</span> 7º Desafio: A Doença dos Mares", desc: "Os marinheiros estão fracos por falta de vitamina C. É o...", dicas: ["Doença comum em longas viagens por falta de frutas frescas.", "Causa fraqueza e sangramento nas gengivas", "É prevenida e curada com vitamina C", "Afetou severamente as tripulações na época", "Limões e laranjas são a cura"], palavra: "ESCORBUTO" },
+    { titulo: "<span class='material-symbols-outlined'>science</span> 7º Desafio: Água Estragando",
+    desc: "A água armazenada está ficando imprópria para consumo. O que usamos para conservá-la?",
+    dicas: [
+        "Líquido ácido usado desde a antiguidade",
+        "Ajuda a conservar alimentos e líquidos",
+        "Tem sabor forte e característico",
+        "Era levado em barris nas viagens",
+        "Muito usado antes da refrigeração"
+    ],
+    palavra: "VINAGRE" },
     { titulo: "<span class='material-symbols-outlined'>explore</span> 8º Desafio: O Guia", desc: "Estamos perdidos na neblina! Precisamos usar a...", dicas: ["Instrumento que aponta sempre para o Norte magnético.", "Possui uma agulha imantada", "Invenção que foi trazida da China", "Essencial para não se perder em mar aberto", "Geralmente vem com a Rosa dos Ventos desenhada"], palavra: "BUSSOLA" },
     { titulo: "<span class='material-symbols-outlined'>local_fire_department</span> 9º Desafio: O Tesouro Ardente", desc: "O que viemos buscar que custa seu peso em ouro?", dicas: ["Especiaria escura, redonda e que arde na boca.", "Usada para disfarçar gosto de carne velha e conservar alimentos", "Tão valorizada que já foi usada como moeda de troca", "Pode ser do reino, branca ou preta", "Faz você espirrar se inalar o pó"], palavra: "PIMENTA" },
     { titulo: "<span class='material-symbols-outlined'>directions_boat</span> 10º Desafio: A Embarcação", desc: "Para navegar ágil contra os ventos, usamos a...", dicas: ["Navio rápido com velas triangulares criado pelos portugueses.", "Embarcação ágil, leve e de fácil manobra", "Usada nas viagens de Colombo e Cabral", "Permitia 'bolinar' (navegar em zigue-zague contra o vento)", "Seu nome soa como 'cara bela'"], palavra: "CARAVELA" },
-    { titulo: "<span class='material-symbols-outlined'>stars</span> 11º Desafio: Medindo os Céus", desc: "Usamos para medir a altura das estrelas e do Sol...", dicas: ["Termina com ÁBIO.", "Usado para medir a altura dos astros acima do horizonte", "Ajuda a calcular a latitude do navio", "Antigo instrumento de metal em formato circular", "Seu nome significa 'tomador de estrelas'"], palavra: "ASTROLABIO" },
+    { titulo: "<span class='material-symbols-outlined'>stars</span> 11º Desafio: Rumo no Escuro",
+    desc: "Sem mapas confiáveis, seguimos observando o céu. O que usamos para nos orientar?",
+    dicas: [
+        "Aparecem apenas à noite",
+        "Guiaram navegadores por séculos",
+        "Formam desenhos no céu",
+        "Mudam conforme a posição no planeta",
+        "São usadas para encontrar direções"
+    ],
+    palavra: "ESTRELAS" },
     { titulo: "<span class='material-symbols-outlined'>storm</span> 12º Desafio: O Fim do Mundo", desc: "Como Bartolomeu Dias chamou o cabo antes do Rei mudar o nome?", dicas: ["Cabo das ...", "Fica no extremo sul da África", "Foi dobrado pela primeira vez por Bartolomeu Dias", "Era um local temido por suas tempestades mortais", "Depois foi rebatizado pelo rei como Boa Esperança"], palavra: "TORMENTAS" },
     { titulo: "<span class='material-symbols-outlined'>checkroom</span> 13º Desafio: Luxo do Oriente", desc: "Além das especiarias, que tecido macio viemos comprar?", dicas: ["Produzida pelo bicho-da-...", "Tecido muito valioso que deu nome a uma famosa Rota", "Originária da China Antiga", "Material extremamente macio, leve e brilhante", "Símbolo de luxo nas roupas dos nobres europeus"], palavra: "SEDA" },
-    { titulo: "<span class='material-symbols-outlined'>liquor</span> 14º Desafio: O Estoque da Tripulação", desc: "Qual bebida não pode faltar no porão para os marujos?", dicas: ["Bebida clássica de piratas e marinheiros.", "Destilada a partir do melaço da cana-de-açúcar", "Bebida alcoólica de alto teor", "Misturada com água e limão (para evitar escorbuto), virava o 'grogue'", "É a bebida favorita do Capitão Jack Sparrow"], palavra: "RUM" },
+    { titulo: "14º Desafio: A Riqueza do Oriente",
+    desc: "Qual metal precioso motivava tantas expedições?",
+    dicas: [
+        "Muito valioso desde a antiguidade",
+        "Usado para moedas e joias",
+        "Brilha intensamente",
+        "Símbolo de riqueza e poder",
+        "Era um dos principais objetivos das viagens"
+    ],
+    palavra: "OURO" },
     { titulo: "<span class='material-symbols-outlined'>anchor</span> 15º Desafio: Terra Firme", desc: "Para o navio parar e descarregarmos as mercadorias, jogamos a...", dicas: ["É de ferro, pesada e vai até o fundo do mar.", "Símbolo mais comum em tatuagens de marinheiros", "Usada para fixar o navio no fundo e evitar que a maré o leve", "Possui duas pontas curvas chamadas de unhas", "Dizemos 'levantar' ela para zarpar, e 'lançar' para estacionar"], palavra: "ANCORA" }
 ];
 
@@ -375,7 +402,7 @@ function finalizarJogo() {
     
     } else {
         titulo = "ROTA CONCLUÍDA: LENDA DOS MARES";
-        icone = "diamond";
+        icone = "south_america";
         animClass = "icon-anim-lenda";
         container.classList.add('end-lenda');
         criarChuvaDeOuro();
